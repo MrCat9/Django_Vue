@@ -264,3 +264,137 @@ restful 实践  http://www.ruanyifeng.com/blog/2014/05/restful_api.html
 
 
 
+## 商品列表页
+
+
+
+
+### 通过django的view返回json数据
+
+F:\pycharm\···\MxShop\MxShop\urls.py
+
+```python
+    # 商品列表页
+    url(r'goods/$', GoodsListView.as_view(), name='good-list')
+```
+
+F:\pycharm\···\MxShop\apps\goods\views_base.py
+
+```python
+class GoodsListView(View):
+    def get(self, request):
+        """
+        通过django的view实现商品列表页
+        :param request:
+        :return:
+        """
+        ···
+        ···
+```
+
+
+
+
+### django-rest-framework
+
+文档  https://www.django-rest-framework.org/
+
+中文文档  https://q1mi.github.io/Django-REST-framework-documentation/
+
+#### 安装 coreapi
+
+```
+pip install coreapi
+```
+
+#### 安装 django-guardian
+
+```
+pip install django-guardian
+```
+
+#### 将 rest_framework 添加到app
+
+F:\pycharm\···\MxShop\MxShop\settings.py
+
+```python
+    'rest_framework',
+```
+
+#### 添加url
+
+F:\pycharm\···\MxShop\MxShop\urls.py
+
+```python
+    # api 登录
+    url(r'^api-auth/', include('rest_framework.urls'))
+```
+
+#### 写 F:\pycharm\···\MxShop\apps\goods\serializers.py
+
+```
+serializers.ModelSerializer
+serializers.Serializer
+```
+
+#### 写 F:\pycharm\···\MxShop\apps\goods\views.py
+
+```
+GenericViewSet          --drf
+    GenericAPIView      --drf
+        APIView         --drf
+            View        --Django
+
+mixin
+    CreateModelMixin
+    ListModelMixin
+    UpdateModelMixin
+    RetrieveModelMixin
+    DestroyModelMixin
+```
+
+```
+使用 django_filter 完成过滤
+https://github.com/carltongibson/django-filter
+https://django-filter.readthedocs.io/en/master/
+
+要在 settings.py 中注册app  'django_filters',
+
+可以写 filters.py 自定义过滤
+```
+
+```
+使用 drf 中的 filters.SearchFilter 完成搜索
+
+drf的filter:
+DjangoFilterBackend
+SearchFilter
+OrderingFilter
+```
+
+```
+使用 drf 中的 filters.OrderingFilter 完成排序
+```
+
+#### 写 F:\pycharm\···\MxShop\MxShop\urls.py
+
+```
+rest_framework.routers
+用 as_view 自定义绑定
+```
+
+#### 写 F:\pycharm\···\MxShop\apps\goods\filters.py
+
+#### 使用drf提供的文档
+
+F:\pycharm\···\MxShop\MxShop\urls.py
+
+```python
+    # drf文档
+    url(r'docs/', include_docs_urls(title="慕学生鲜")),
+```
+
+
+
+
+##
